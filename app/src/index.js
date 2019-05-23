@@ -21,6 +21,8 @@ const App = {
       // get accounts
       const accounts = await web3.eth.getAccounts();
       this.account = accounts[0];
+      const acc = document.getElementById("account");
+      acc.innerHTML = this.account;
     } catch (error) {
       console.error("Could not connect to contract or chain.");
     }
@@ -39,14 +41,19 @@ const App = {
     App.setStatus("New Star Owner is " + this.account + ".");
   },
 
+  setInfo: function(message) {
+    const info = document.getElementById("info");
+    info.innerHTML = message;
+  },
   // Implement Task 4 Modify the front end of the DAPP
   lookUp: async function (){
     const { lookUptokenIdToStarInfo } = this.meta.methods;
     const id = document.getElementById("lookid").value;
     const info = await lookUptokenIdToStarInfo(id).call();  // 用返回值的情况
     console.log(info);
+    App.setInfo("The Star name is " + info);
   }
-
+  
 };
 
 window.App = App;
